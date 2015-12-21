@@ -86,9 +86,15 @@ var PhantomJSBrowser = function (baseBrowserDecorator, config, args, logger) {
 PhantomJSBrowser.prototype = {
   name: 'PhantomJS',
 
+  // This is a complete hack to support phantom 2 in development and in CI.
+  // Once the real karma-phantomjs-launcher maintainers release a version that
+  // supports Phantom2, cherry-pick Zach Collins' change to make the screenshot
+  // specs work:
+  // https://github.com/jeffjo/karma-phantomjs-launcher/commit/4e715dc6ed5d5956c6a5f6b4727a23775b5e2efe
+  // https://github.com/jeffjo/karma-phantomjs-launcher/commit/d3c6a1b6ddfc4bc926deabaee8251806701c2507
   DEFAULT_CMD: {
-    linux: require('phantomjs').path,
-    darwin: require('phantomjs').path,
+    linux: '/usr/local/phantomjs/2.0.0/phantomjs',
+    darwin: '/usr/local/bin/phantomjs',
     win32: phantomJSExePath()
   },
   ENV_CMD: 'PHANTOMJS_BIN'
